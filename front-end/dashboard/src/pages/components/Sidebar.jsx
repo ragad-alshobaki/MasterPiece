@@ -16,7 +16,7 @@ export default function Sidebar() {
             </a>
           </li>
 
-          <li className="sidebar-item active">
+          <li className="sidebar-item">
             <a className="sidebar-link" href="/admins">
               <i className="align-middle" data-feather="sliders"></i>
               <span className="align-middle">Admins</span>

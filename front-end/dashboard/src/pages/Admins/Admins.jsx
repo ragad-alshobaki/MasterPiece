@@ -18,10 +18,11 @@ export default function Main() {
       const result = await axios("http://127.0.0.1:8000/api/users");
       // console.log(result)
       // console.log(result.data)
-      console.log(result.data.result);
+      // console.log(result.data.result);
       setUserData(result.data.result);
     } catch (error) {
-      console.log("Somthing went wrong");
+      // console.log("Somthing went wrong");
+      alert("Something went wrong");
     }
   };
   const handleDelete = async (id) => {
@@ -51,11 +52,13 @@ export default function Main() {
                   <div className="card">
                     <div className="card-header d-flex align-items-center justify-content-between">
                       <h5 className="card-title mb-0">Details Table</h5>
-                      <a href="/create_admin" className="btn btn-success btn-rounded btn-fw">
+                      {/* <a href="/create_admin" className="btn btn-success btn-rounded btn-fw">
                         Add Admin
-                      </a>
+                      </a> */}
+                      <NavLink to={`/create_admin`} className="btn btn-success btn-rounded btn-fw"> Add Admin </NavLink>
                     </div>
                     <div className="card-body">
+                    <div className="table-responsive" style={{ maxHeight: "500px", overflowY: "auto" }}>
                       <table className="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
@@ -76,13 +79,13 @@ export default function Main() {
                                 <td>{admin.role}</td>
                                 <td>
                                   <NavLink
-                                    to={`/view/${admin.id}`}
+                                    to={`/admin/${admin.id}`}
                                     className="btn btn-info mx-1"
                                   >
                                     view
                                   </NavLink>
                                   <NavLink
-                                    to={`/edit/${admin.id}`}
+                                    to={`/admin_update/${admin.id}`}
                                     className="btn btn-warning mx-1"
                                   >
                                     Edit
@@ -100,6 +103,7 @@ export default function Main() {
                           })}
                         </tbody>
                       </table>
+                    </div>
                     </div>
                   </div>
                 </div>

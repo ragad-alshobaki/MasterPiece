@@ -10,9 +10,7 @@ export default function Main() {
         <Header />
         <main className="content">
 				<div className="container-fluid p-0">
-
-					<h1 className="h3 mb-3"><strong>Analytics</strong> Dashboardddd</h1>
-
+					<h1 className="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
 					<div className="row">
 						<div className="col-xl-6 col-xxl-5 d-flex">
 							<div className="w-100">
