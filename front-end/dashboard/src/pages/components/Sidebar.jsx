@@ -7,7 +7,9 @@ export default function Sidebar() {
         </a>
 
         <ul className="sidebar-nav">
-          <li className="sidebar-header">Pages</li>
+          <li className="sidebar-header">
+            {/* Pages */}
+            </li>
 
           <li className="sidebar-item active">
             <a className="sidebar-link" href="/dashboard">
