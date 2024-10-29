@@ -35,7 +35,8 @@ export default function CreateAdmin() {
       );
       console.log(response);
       alert("Admin Added successfully!");
-      navigate("/admins");
+      const adminId = response.data.admin.id;
+      navigate(`/admin/${adminId}`);
     } catch (error) {
       console.log("Something Wrong");
       alert("Something Wrong, Try again, & Check all fields!");
