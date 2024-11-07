@@ -6,8 +6,8 @@ use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class  UserController extends Controller
 {
     /**
@@ -15,11 +15,11 @@ class  UserController extends Controller
      */
     public function index()
     {
-        $users = User::all(); 
-          
+        $users = User::all();
+
         return response()->json([
-             'result' => $users
-        ],200);
+            'result' => $users
+        ], 200);
     }
 
     /**
@@ -34,38 +34,58 @@ class  UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UserStoreRequest $request)
-    { 
+    {
         try {
-            // if ($request->user_image) {
-            //     $file = $request->user_image;
-            //     $extension = $request->user_image->getClientOriginalExtension();
-            //     $user_imageFileName = time() . '.' . $extension;
-            //     $path = 'uploads/user_image';
-            //     $file->move($path, $user_imageFileName);
-            // }
+            if ($request->hasFile('user_image')) {
+                $imageName = Str::random(10) . "." . $request->user_image->getClientOriginalExtension();
+                Storage::disk('public')->put('users_images/' . $imageName, file_get_contents($request->user_image));
+            }
+
+            // dd($request->all());
             User::create([
                 'nat_id' => $request->nat_id,
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                // 'password' => $request->password,
                 'password' => Hash::make($request->password),
-                // 'password' => Hash::make($request->input('password')),
-                // 'password' => bcrypt($request->password),
                 'role' => $request->role,
-                'user_image' => $request->user_image,
-                // 'user_image' => 'uploads/user_image' . $user_imageFileName,
+                'user_image' => $imageName,
                 'dob' => $request->dob,
-                'gender' => $request->gender,
+                'gender' => $request->gender
             ]);
+
             return response()->json([
                 'message' => "User successfully created."
             ],200);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage()); // Log the exception
-            return response()->json([
-                'message' => "Something went really wrong!"
-            ],500);
-        }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => "Something went really wrong!"
+                ],500);
+            }
+
+            // $userData = $request->validated();
+            // $userData['password'] = Hash::make($request->password);
+
+            // if ($request->hasFile('user_image')) {
+            //     $imagePath = $request->file('user_image')->store('users_images', 'public');
+            //     $userData['user_image'] = $imagePath;
+            // }
+
+            // if ($request->hasFile('user_image')) {
+            //     $filename = time() . '.' . $request->file('user_image')->getClientOriginalExtension();
+            //     $path = $request->file('user_image')->storeAs('users_images', $filename, 'public');
+            // }
+            
+            // User::create($userData);
+
+        //     return response()->json([
+        //         'message' => "User successfully created."
+        //     ], 200);
+        // } catch (\Exception $e) {
+        //     Log::error($e->getMessage());
+        //     return response()->json([
+        //         'message' => "Something went really wrong!"
+        //     ], 500);
+        // }
     }
 
     /**
@@ -73,16 +93,16 @@ class  UserController extends Controller
      */
     public function show($id)
     {
-       $users = User::find($id);
-       if(!$users){
-         return response()->json([
-            'message'=>'This User Not Found.'
-         ],404);
-       }
-       
-       return response()->json([
-          'users' => $users
-       ],200);
+        $users = User::find($id);
+        if (!$users) {
+            return response()->json([
+                'message' => 'This User Not Found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'users' => $users
+        ], 200);
     }
 
     /**
@@ -99,37 +119,82 @@ class  UserController extends Controller
     public function update(UserStoreRequest $request, $id)
     {
         try {
-            $users = User::find($id);
-            if(!$users){
-              return response()->json([
-                'message'=>'This User Not Found.'
-              ],404);
+            $user = User::findOrFail($id);
+            // $user = User::find($id);
+            // if(!$user){
+            //     return response()->json([
+            //       'message'=>'This User Not Found.'
+            //     ],404);
+            //   }
+
+              //echo "request : $request->name";
+              $user->nat_id = $request->nat_id;
+              $user->full_name = $request->full_name;
+              $user->email = $request->email;
+              if (!empty($request->password)) {
+                $user->password = Hash::make($request->password);
             }
-       
-            //echo "request : $request->image";
-            $users->nat_id = $request->nat_id;
-            $users->full_name = $request->full_name;
-            $users->email = $request->email;
-            // $users->password = $request->password;
-            $users->password = Hash::make($request->password);
-            $users->role = $request->role;
-            $users->dob = $request->dob;
-            $users->gender = $request->gender;
+            
+            //   $user->password = Hash::make($request->password);
+              $user->role = $request->role;
+              $user->dob = $request->dob;
+              $user->gender = $request->gender;
+        
+              if($request->user_image) {
+                  $storage = Storage::disk('public');
+                  if($storage->exists('users_images/' . $user->user_image))
+                      $storage->delete('users_images/' . $user->user_image);
 
-            // Handle image upload and replace old image
-            // $user_imageFileName = $this->uploadFile($request->file('user_image'), 'user_image');
+                  $imageName = Str::random(10). "." .$request->user_image->getClientOriginalExtension();
+                  $user->user_image = $imageName;
+                  $storage->put('users_images/'.$imageName, file_get_contents($request->user_image));
+              }
+        
+              $user->save();
+        
+              return response()->json([
+                  'message' => "Data successfully updated."
+              ],200);
+          } catch (\Exception $e) {
+              return response()->json([
+                  'message' => "Something went really wrong!"
+              ],500);
+          }
 
-            $users->save();
-       
-            return response()->json([
-                'message' => "successfully updated."
-            ],200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => "Something went really wrong!",
-                "exception" => $e
-            ],500);
-        }
+
+            // $userData = $request->validated();
+    
+            // Hash the password only if it's provided in the request
+            // if (!empty($userData['password'])) {
+            //     $userData['password'] = Hash::make($request->password);
+            // } else {
+            //     unset($userData['password']);
+            // }
+    
+            // Update image if a new file is provided
+            // if ($request->hasFile('user_image')) {
+                // Delete the old image if it exists
+                // if ($user->user_image) {
+                //     Storage::disk('public')->delete($user->user_image);
+                // }
+    
+                // Store the new image
+            //     $imagePath = $request->file('user_image')->store('users_images', 'public');
+            //     $userData['user_image'] = $imagePath;
+            // }
+    
+            // Update the user data
+            // $user->update($userData);
+    
+        //     return response()->json([
+        //         'message' => "User successfully updated."
+        //     ], 200);
+        // } catch (\Exception $e) {
+        //     Log::error($e->getMessage());
+        //     return response()->json([
+        //         'message' => "Something went really wrong!"
+        //     ], 500);
+        // }
     }
 
     /**
@@ -137,17 +202,25 @@ class  UserController extends Controller
      */
     public function destroy($id)
     {
-        $users = User::find($id);
-        if(!$users){
-          return response()->json([
-             'message'=>'This User Not Found.'
-          ],404);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'This User Not Found.'
+            ], 404);
         }
-         
-        $users->delete();
-        
+
+        $storage = Storage::disk('public');
+        if($storage->exists('users_images/'.$user->user_image))
+           $storage->delete('users_images/'.$user->user_image);
+
+        // if ($user->user_image) {
+        //     Storage::disk('public')->delete($user->user_image);
+        // }
+
+        $user->delete();
+
         return response()->json([
             'message' => "successfully deleted."
-        ],200);
+        ], 200);
     }
 }

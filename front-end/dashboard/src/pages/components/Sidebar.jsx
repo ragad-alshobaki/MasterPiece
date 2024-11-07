@@ -13,114 +13,61 @@ export default function Sidebar() {
 
           <li className="sidebar-item active">
             <a className="sidebar-link" href="/dashboard">
-              <i className="align-middle" data-feather="sliders"></i>
+              <i className="align-middle fa-light fa-gauge"></i>
               <span className="align-middle">Dashboard</span>
             </a>
           </li>
 
           <li className="sidebar-item">
             <a className="sidebar-link" href="/admins">
-              <i className="align-middle" data-feather="sliders"></i>
+              <i className="align-middle fa-light fa-user-tie"></i>
               <span className="align-middle">Admins</span>
             </a>
           </li>
 
           <li className="sidebar-item">
             <a className="sidebar-link" href="pages-profile.html">
-              <i className="align-middle" data-feather="user"></i>
-              <span className="align-middle">Profile</span>
+              <i className="align-middle fa-light fa-screen-users"></i>
+              <span className="align-middle">students</span>
             </a>
           </li>
 
           <li className="sidebar-item">
             <a className="sidebar-link" href="pages-sign-in.html">
-              <i className="align-middle" data-feather="log-in"></i>
-              <span className="align-middle">Sign In</span>
+              <i className="align-middle fa-light fa-bell-school"></i>
+              <span className="align-middle">Classes</span>
             </a>
           </li>
 
           <li className="sidebar-item">
             <a className="sidebar-link" href="pages-sign-up.html">
-              <i className="align-middle" data-feather="user-plus"></i>
-              <span className="align-middle">Sign Up</span>
+              <i className="align-middle fa-light fa-books"></i>
+              <span className="align-middle">Courses</span>
             </a>
           </li>
 
           <li className="sidebar-item">
             <a className="sidebar-link" href="pages-blank.html">
-              <i className="align-middle" data-feather="book"></i>
-              <span className="align-middle">Blank</span>
-            </a>
-          </li>
-
-          <li className="sidebar-header">Tools & Components</li>
-
-          <li className="sidebar-item">
-            <a className="sidebar-link" href="ui-buttons.html">
-              <i className="align-middle" data-feather="square"></i>
-              <span className="align-middle">Buttons</span>
+              <i className="align-middle fa-light fa-arrow-right-to-bracket"></i>
+              <span className="align-middle">Enrollment</span>
             </a>
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="ui-forms.html">
-              <i className="align-middle" data-feather="check-square"></i>
-              <span className="align-middle">Forms</span>
+            <a className="sidebar-link" href="pages-blank.html">
+              <i className="align-middle fa-light fa-calendar-star"></i>
+              <span className="align-middle">Events</span>
             </a>
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="ui-cards.html">
+            <a className="sidebar-link" href="pages-blank.html">
+              {/* <i className="align-middle fa-duotone fa-solid fa-grid-horizontal"></i> */}
               <i className="align-middle" data-feather="grid"></i>
-              <span className="align-middle">Cards</span>
-            </a>
-          </li>
-
-          <li className="sidebar-item">
-            <a className="sidebar-link" href="ui-typography.html">
-              <i className="align-middle" data-feather="align-left"></i>
-              <span className="align-middle">Typography</span>
-            </a>
-          </li>
-
-          <li className="sidebar-item">
-            <a className="sidebar-link" href="icons-feather.html">
-              <i className="align-middle" data-feather="coffee"></i>
-              <span className="align-middle">Icons</span>
-            </a>
-          </li>
-
-          <li className="sidebar-header">Plugins & Addons</li>
-
-          <li className="sidebar-item">
-            <a className="sidebar-link" href="charts-chartjs.html">
-              <i className="align-middle" data-feather="bar-chart-2"></i>
-              <span className="align-middle">Charts</span>
-            </a>
-          </li>
-
-          <li className="sidebar-item">
-            <a className="sidebar-link" href="maps-google.html">
-              <i className="align-middle" data-feather="map"></i>
-              <span className="align-middle">Maps</span>
+              <span className="align-middle">Activities</span>
             </a>
           </li>
         </ul>
-
-        <div className="sidebar-cta">
-          <div className="sidebar-cta-content">
-            <strong className="d-inline-block mb-2">Upgrade to Pro</strong>
-            <div className="mb-3 text-sm">
-              Are you looking for more components? Check out our premium
-              version.
-            </div>
-            <div className="d-grid">
-              <a href="upgrade-to-pro.html" className="btn btn-primary">
-                Upgrade to Pro
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
   );

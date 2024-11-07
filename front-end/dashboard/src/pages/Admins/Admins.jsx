@@ -6,36 +6,58 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-export default function Main() {
+export default function Admins() {
   const [userData, setUserData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios("http://127.0.0.1:8000/api/users");
+        // console.log(result)
+        // console.log(result.data)
+        // console.log(result.data.result);
+        // setUserData(result.data.result);
+        const filteredAdmins = result.data.result.filter(
+          (user) => user.role === "Supervisor" || user.role === "Teacher"
+        );
+        setUserData(filteredAdmins);
+      } catch (error) {
+        // console.log("Somthing went wrong");
+        alert("Something went wrong");
+      }
+    };
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const result = await axios("http://127.0.0.1:8000/api/users");
-      // console.log(result)
-      // console.log(result.data)
-      // console.log(result.data.result);
-      setUserData(result.data.result);
-    } catch (error) {
-      // console.log("Somthing went wrong");
-      alert("Something went wrong");
-    }
-  };
-
   const handleDelete = async (id) => {
     // console.log(id)
-    await axios.delete(`http://127.0.0.1:8000/api/admin_delete/${id}`);
-    const newUserData = userData.filter((item) => item.id !== id);
-    setUserData(newUserData);
+    const isConfirmed = window.confirm("Are you sure you want to delete this admin?");
+    if (!isConfirmed) return;
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/user_delete/${id}`);
+      const newUserData = userData.filter((item) => item.id !== id);
+      setUserData(newUserData);
+    } catch (error) {
+      alert("Something went wrong while deleting the admin.");
+    }
   };
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const handleSort = () => {
+    const sortedData = [...userData].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.full_name.localeCompare(b.full_name);
+      } else {
+        return b.full_name.localeCompare(a.full_name);
+      }
+    });
+    setUserData(sortedData);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
   const filteredData = userData.filter(
@@ -74,9 +96,14 @@ export default function Main() {
                       <table className="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">Sr.No.</th>
                             <th scope="col">National ID</th>
-                            <th scope="col">Full Name</th>
+                            <th scope="col">Full Name 
+                              <button className="btn p-0" onClick={handleSort}>
+                              {/* btn-link */}
+                                 {sortOrder === "asc" ? "▲" : "▼"}
+                              </button>
+                            </th>
                             <th scope="col">Role</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -86,7 +113,7 @@ export default function Main() {
                             <tr key={i}>
                               <td>{i + 1}</td>
                               <td>{admin.nat_id}</td>
-                              <td>{admin.full_name}</td>
+                              <td className="sortable">{admin.full_name}</td>
                               <td>{admin.role}</td>
                               <td>
                                 <NavLink to={`/admin/${admin.id}`} className="btn btn-info mx-1">View</NavLink>
