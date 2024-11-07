@@ -105,7 +105,7 @@ export default function Admins() {
                               </button>
                             </th>
                             <th scope="col">Role</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" style={{ width: 250 }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -118,7 +118,7 @@ export default function Admins() {
                               <td>
                                 <NavLink to={`/admin/${admin.id}`} className="btn btn-info mx-1">View</NavLink>
                                 <NavLink to={`/admin_update/${admin.id}`} className="btn btn-warning mx-1">Edit</NavLink>
-                                <button className="btn btn-danger" onClick={() => handleDelete(admin.id)}>Delete</button>
+                                <button className="btn btn-danger mx-1" onClick={() => handleDelete(admin.id)}>Delete</button>
                               </td>
                             </tr>
                           ))}

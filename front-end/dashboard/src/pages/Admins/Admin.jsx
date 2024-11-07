@@ -1,13 +1,13 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import './t.css';
+import "./view_admin.css";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 
 export default function Admin() {
-  const [admin, setAdmin] = useState({});
+  const [adminInfo, setAdminInfo] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -19,7 +19,7 @@ export default function Admin() {
     try {
       const result = await axios.get(`http://localhost:8000/api/user/${id}`);
       console.log(result.data.users);
-      setAdmin(result.data.users);
+      setAdminInfo(result.data.users);
     } catch (err) {
       console.log("Something went wrong while fetching the admin data.");
     }
@@ -43,12 +43,16 @@ export default function Admin() {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header d-flex align-items-center justify-content-between">
-                    <h5 className="card-title mb-0">
-                      Details of {admin.full_name}
-                    </h5>
+                    <h5 className="card-title mb-0">ID No. {adminInfo.id}</h5>
                     <div>
+                      <NavLink
+                        to={`/admin_update/${adminInfo.id}`}
+                        className="btn btn-warning mx-1"
+                      >
+                        Edit
+                      </NavLink>
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-primary mx-1"
                         onClick={clickToBackHandler}
                       >
                         Back
@@ -56,43 +60,43 @@ export default function Admin() {
                     </div>
                   </div>
                   <div className="card-body">
-                  <div className="card">
-                    <div className="profile-card">
-                      <div className="profile-image-section">
-                        <div className="profile-image">
-                          <img
-                            src={admin.user_image 
-                              ? `http://127.0.0.1:8000/storage/public/users_images/${admin.user_image}`
-                              : "https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp"}
-                            alt="User_Image"
-                          />
-                          <span className="camera-icon">📷</span>
+                    <div className="card">
+                      <div className="profile-card">
+                        <div className="profile-image-section">
+                          <div className="profile-image">
+                            <img
+                              src={
+                                adminInfo.user_image
+                                  ? `http://127.0.0.1:8000/storage/users_images/${adminInfo.user_image}`
+                                  : "https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp"
+                              }
+                              alt="User_Image"
+                            />
+                            {/* <span className="camera-icon">📷</span> */}
+                          </div>
                         </div>
-                        {/* <div className="upload-buttons">
-                          <button className="upload-button">LOGO</button>
-                          <button className="upload-button">VENDOR DOCUMENTS</button>
-                        </div> */}
-                      </div>
-                      <div className="profile-details">
-                        <p>
-                          <strong>Name:</strong> {admin.full_name}
-                        </p>
-                        <p>
-                          <strong>Email:</strong> {admin.email}
-                        </p>
-                        <p>
-                          <strong>Role:</strong> {admin.role}
-                        </p>
-                        <p>
-                          <strong>Date of Birth:</strong> {admin.dob}
-                        </p>
-                        {/* ✎ */}
-                        <button className="btn btn-warning"> Edit </button>
+                        <div className="profile-details">
+                          <p>
+                            <strong>Name:</strong> {adminInfo.full_name}
+                          </p>
+                          <p>
+                            <strong>Email:</strong> {adminInfo.email}
+                          </p>
+                          <p>
+                            <strong>Role:</strong> {adminInfo.role}
+                          </p>
+                          <p>
+                            <strong>Date of Birth:</strong> {adminInfo.dob}
+                          </p>
+                          {/* ✎ */}
+                          {/* <button className="btn btn-warning"> Edit </button> */}
+                        </div>
                       </div>
                     </div>
+                    <h5 className="card-title mb-0">
+                      Last update at ( {adminInfo.updated_at} )
+                    </h5>
                   </div>
-                  </div>
-
                 </div>
               </div>
             </div>

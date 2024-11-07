@@ -142,7 +142,7 @@ export default function UpdateAdmin() {
                           type="password"
                           name="password"
                           className="form-control"
-                          placeholder="Enter Password (leave blank if not changing)"
+                          placeholder="Leave blank if not changing"
                           onChange={handleChange}
                         />
                       </div>
@@ -156,7 +156,7 @@ export default function UpdateAdmin() {
                           onChange={handleChange}
                           required
                         >
-                          <option value="">Select Role</option>
+                          <option value="">Select Gender</option>
                           <option value="Supervisor">Supervisor</option>
                           <option value="Teacher">Teacher</option>
                         </select>
