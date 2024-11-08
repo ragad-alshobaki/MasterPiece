@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function Sidebar() {
   return (
     <nav id="sidebar" className="sidebar js-sidebar">
@@ -12,24 +14,32 @@ export default function Sidebar() {
             </li>
 
           <li className="sidebar-item active">
-            <a className="sidebar-link" href="/dashboard">
+            {/* <a className="sidebar-link" href="/dashboard"> */}
+            <NavLink to={`/dashboard`} className="sidebar-link">
               <i className="align-middle fa-light fa-gauge"></i>
               <span className="align-middle">Dashboard</span>
-            </a>
+            </NavLink>
+            {/* </a> */}
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="/admins">
+            {/* <a className="sidebar-link" href="/admins"> */}
+            <NavLink to={`/admins`} className="sidebar-link">
               <i className="align-middle fa-light fa-user-tie"></i>
               <span className="align-middle">Admins</span>
-            </a>
+            {/* </a> */}
+            </NavLink>
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="pages-profile.html">
+            {/* <a className="sidebar-link" href="pages-profile.html"> */}
+            <NavLink to={`/Students`} className="sidebar-link">
+
               <i className="align-middle fa-light fa-screen-users"></i>
               <span className="align-middle">students</span>
-            </a>
+            {/* </a> */}
+            </NavLink>
+
           </li>
 
           <li className="sidebar-item">
