@@ -30,7 +30,7 @@ class UserStoreRequest extends FormRequest
                 // 'password' => 'required|string|min:8|confirmed',
                 'password' => 'required|string|min:8',
                 'role' => 'required|string',
-                'user_image' => 'nullable|image|mimes:jpeg,png,jpg',
+                'user_image' => 'nullable|nullable|image|mimes:jpeg,png,jpg',
                 'dob' => 'required|date',
                 'gender' => 'required|string'
             ];

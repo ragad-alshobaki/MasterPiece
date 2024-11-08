@@ -18,10 +18,42 @@ export default function CreateAdmin() {
     email: "",
     password: "",
     role: "",
-    user_image: null,
+    // user_image: null,
     dob: "",
     gender: "",
   });
+  const [adminImg, setAdminImg] = useState("");
+
+  const createAdminData = async()=>{
+    console.log(adminImg)
+    const formData= new FormData();
+    formData.append('nat_id', adminData.nat_id);
+    formData.append('full_name',adminData.full_name);
+    formData.append('email',adminData.email);
+    formData.append('password',adminData.password);
+    formData.append('role',adminData.role);
+    formData.append('user_image', adminImg);
+    formData.append('dob',adminData.dob);
+    formData.append('gender',adminData.gender);
+
+    const response= await axios.post("http://127.0.0.1:8000/api/create_user", formData, {
+      headers:{'Content-Type':"multipart/form-data"},
+    } );
+
+    if(response)
+    {
+      console.log(response)
+      alert("Admin Added successfully!");
+      setTimeout(()=>{
+          navigate('/admins');
+      }, 1000);
+    }
+  }
+
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    await createAdminData();
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,39 +64,44 @@ export default function CreateAdmin() {
   };
 
   const handleFileChange = (e) => {
-    setAdminData({
-      ...adminData,
+    setAdminImg({
+      ...adminImg,
       user_image: e.target.files[0],
     });
   };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    for (const key in adminData) {
-      data.append(key, adminData[key]);
-    }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData();
+  //   for (const key in adminData) {
+  //     data.append(key, adminData[key]);
+  //   }
 
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/create_user",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      alert(response.data.message);
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/api/create_user",
+  //       data,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     alert(response.data.message);
       // console.log(response);
       // alert("Admin Added successfully!");
-      navigate(`/admins`);
-    } catch (error) {
-      console.error("There was an error!", error);
-      alert("Something Wrong, Try again, & Check all fields!");
-    }
-  };
+  //     navigate(`/admins`);
+  //   } catch (error) {
+  //     console.error("There was an error!", error.response);
+  //     if (error.response && error.response.data && error.response.data.errors) {
+  //       // Show validation errors from Laravel
+  //       alert(JSON.stringify(error.response.data.errors));
+  //     } else {
+  //     alert("Something Wrong, Try again, & Check all fields!");
+  //   }
+  // }
+  // };
 
   return (
     <div className="wrapper">
@@ -115,10 +152,6 @@ export default function CreateAdmin() {
                           </select>
                         </div>
                         <div className="form-group mb-3">
-                          <label htmlFor="user_image">Image</label>
-                          <input type="file" name="user_image" className="form-control" onChange={handleFileChange} />
-                        </div>
-                        <div className="form-group mb-3">
                           <label htmlFor="dob">Date of Birth</label>
                           <input type="date" name="dob" className="form-control" onChange={handleChange} required />
                         </div>
@@ -129,6 +162,10 @@ export default function CreateAdmin() {
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
+                        </div>
+                        <div className="form-group mb-3">
+                          <label htmlFor="user_image">Image</label>
+                          <input type="file" name="user_image" className="form-control" onChange={handleFileChange} />
                         </div>
                         <div className="d-flex justify-content-center">
                           <button type="submit" className="btn btn-success "> Add </button>

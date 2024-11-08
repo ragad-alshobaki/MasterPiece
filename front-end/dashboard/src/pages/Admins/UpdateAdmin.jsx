@@ -21,9 +21,9 @@ export default function UpdateAdmin() {
   });
   const [adminImg, setAdminImg] = useState("");
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
     setAdminData((values) => ({ ...values, [name]: value }));
   };
 

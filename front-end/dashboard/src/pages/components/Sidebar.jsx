@@ -9,13 +9,16 @@ export default function Sidebar() {
         </a>
 
         <ul className="sidebar-nav">
-          <li className="sidebar-header">
-            {/* Pages */}
-            </li>
+          <li className="sidebar-header">{/* Pages */}</li>
 
           <li className="sidebar-item active">
             {/* <a className="sidebar-link" href="/dashboard"> */}
-            <NavLink to={`/dashboard`} className="sidebar-link">
+            <NavLink
+              to={`/dashboard`}
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
               <i className="align-middle fa-light fa-gauge"></i>
               <span className="align-middle">Dashboard</span>
             </NavLink>
@@ -24,22 +27,23 @@ export default function Sidebar() {
 
           <li className="sidebar-item">
             {/* <a className="sidebar-link" href="/admins"> */}
-            <NavLink to={`/admins`} className="sidebar-link">
+            <NavLink to={`/admins`} 
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }>
               <i className="align-middle fa-light fa-user-tie"></i>
               <span className="align-middle">Admins</span>
-            {/* </a> */}
+              {/* </a> */}
             </NavLink>
           </li>
 
           <li className="sidebar-item">
             {/* <a className="sidebar-link" href="pages-profile.html"> */}
             <NavLink to={`/Students`} className="sidebar-link">
-
               <i className="align-middle fa-light fa-screen-users"></i>
               <span className="align-middle">students</span>
-            {/* </a> */}
+              {/* </a> */}
             </NavLink>
-
           </li>
 
           <li className="sidebar-item">
@@ -73,7 +77,7 @@ export default function Sidebar() {
           <li className="sidebar-item">
             <a className="sidebar-link" href="pages-blank.html">
               {/* <i className="align-middle fa-duotone fa-solid fa-grid-horizontal"></i> */}
-              <i className="align-middle" data-feather="grid"></i>
+              <i className="align-middle fa-light fa-square-star"></i>
               <span className="align-middle">Activities</span>
             </a>
           </li>

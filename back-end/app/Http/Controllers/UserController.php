@@ -48,7 +48,8 @@ class  UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
-                'user_image' => $imageName,
+                // 'user_image' => $imageName,
+                'user_image' => $imageName ?? null,
                 'dob' => $request->dob,
                 'gender' => $request->gender
             ]);

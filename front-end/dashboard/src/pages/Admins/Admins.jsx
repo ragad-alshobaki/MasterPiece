@@ -44,8 +44,8 @@ export default function Admins() {
     }
   };
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
   };
 
   const handleSort = () => {

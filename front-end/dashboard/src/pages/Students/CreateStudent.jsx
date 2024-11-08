@@ -18,10 +18,42 @@ export default function CreateStudent() {
       email: "",
       password: "",
       role: "",
-      user_image: null,
+      // user_image: null,
       dob: "",
       gender: "",
     });
+    const [studenImg, setStudentImg] = useState("");
+
+    const createStudentData = async()=>{
+      console.log(studenImg)
+      const formData= new FormData();
+      formData.append('nat_id', studentData.nat_id);
+      formData.append('full_name',studentData.full_name);
+      formData.append('email',studentData.email);
+      formData.append('password',studentData.password);
+      formData.append('role',studentData.role);
+      formData.append('user_image', studenImg);
+      formData.append('dob',studentData.dob);
+      formData.append('gender',studentData.gender);
+  
+      const response= await axios.post("http://127.0.0.1:8000/api/create_user", formData, {
+        headers:{'Content-Type':"multipart/form-data"},
+      } );
+  
+      if(response)
+      {
+        console.log(response)
+        alert("Student Added successfully!");
+        setTimeout(()=>{
+            navigate('/students');
+        }, 1000);
+      }
+    }
+  
+    const handleSubmit= async(e)=>{
+      e.preventDefault();
+      await createStudentData();
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,32 +70,32 @@ export default function CreateStudent() {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = new FormData();
-        for (const key in studentData) {
-          data.append(key, studentData[key]);
-        }
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const data = new FormData();
+    //     for (const key in studentData) {
+    //       data.append(key, studentData[key]);
+    //     }
     
-        try {
-          const response = await axios.post(
-            "http://127.0.0.1:8000/api/create_user",
-            data,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-          alert(response.data.message);
-          // console.log(response);
-          // alert("Student Added successfully!");
-          navigate(`/students`);
-        } catch (error) {
-          console.error("There was an error!", error);
-          alert("Something Wrong, Try again, & Check all fields!");
-        }
-    };
+    //     try {
+    //       const response = await axios.post(
+    //         "http://127.0.0.1:8000/api/create_user",
+    //         data,
+    //         {
+    //           headers: {
+    //             "Content-Type": "multipart/form-data",
+    //           },
+    //         }
+    //       );
+    //       alert(response.data.message);
+    //       // console.log(response);
+    //       // alert("Student Added successfully!");
+    //       navigate(`/students`);
+    //     } catch (error) {
+    //       console.error("There was an error!", error);
+    //       alert("Something Wrong, Try again, & Check all fields!");
+    //     }
+    // };
 
     return(
         <div className="wrapper">
@@ -109,10 +141,6 @@ export default function CreateStudent() {
                             </select>
                           </div>
                           <div className="form-group mb-3">
-                            <label htmlFor="user_image">Image</label>
-                            <input type="file" name="user_image" className="form-control" onChange={handleFileChange} />
-                          </div>
-                          <div className="form-group mb-3">
                             <label htmlFor="dob">Date of Birth</label>
                             <input type="date" name="dob" className="form-control" onChange={handleChange} required />
                           </div>
@@ -123,6 +151,10 @@ export default function CreateStudent() {
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
                             </select>
+                          </div>
+                          <div className="form-group mb-3">
+                            <label htmlFor="user_image">Image</label>
+                            <input type="file" name="user_image" className="form-control" onChange={handleFileChange} />
                           </div>
                           <div className="d-flex justify-content-center">
                             <button type="submit" className="btn btn-success "> Add </button>
