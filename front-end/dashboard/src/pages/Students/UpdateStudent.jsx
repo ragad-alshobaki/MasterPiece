@@ -21,13 +21,13 @@ export default function UpdateStudent() {
   });
   const [studentImg, setStudentImg] = useState("");
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
     setStudentData((values) => ({ ...values, [name]: value }));
   };
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
 
 //     if (name !== "user_image") {  // Handle normal inputs
 //       setStudentData((prevData) => ({
