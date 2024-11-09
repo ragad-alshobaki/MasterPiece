@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,9 @@ Route::get('user/{id}', [UserController::class, 'show']);
 Route::post('create_user', [UserController::class, 'store']); 
 Route::put('user_update/{id}', [UserController::class, 'update']);
 Route::delete('user_delete/{id}', [UserController::class, 'destroy']);
+
+Route::get('events', [EventController::class, 'index']);
+Route::get('event/{id}', [EventController::class, 'show']); 
+Route::post('create_event', [EventController::class, 'store']); 
+Route::put('event_update/{id}', [EventController::class, 'update']);
+Route::delete('event_delete/{id}', [EventController::class, 'destroy']);

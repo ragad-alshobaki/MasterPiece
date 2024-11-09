@@ -49,7 +49,7 @@ export default function UpdateAdmin() {
     console.log(response);
     setTimeout(() => {
       navigate("/admins");
-    }, 2000);
+    }, 1000);
   };
 
   const handleSubmit = async (e) => {

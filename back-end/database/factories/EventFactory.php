@@ -20,7 +20,7 @@ class EventFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'event_date' => $this->faker->date('Y-m-d'),
-            'event_time' => $this->faker->time(),
+            'event_time' => $this->faker->time('H:i'),
         ];
     }
 }

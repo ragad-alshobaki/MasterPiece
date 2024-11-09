@@ -7,68 +7,67 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateStudent() {
-    const navigate = useNavigate();
-    const clickToBackHandler = () => {
-      navigate("/students");
-    };
-  
-    const [studentData, setStudentData] = useState({
-      nat_id: "",
-      full_name: "",
-      email: "",
-      password: "",
-      role: "",
-      // user_image: null,
-      dob: "",
-      gender: "",
-    });
-    const [studenImg, setStudentImg] = useState("");
+  const navigate = useNavigate();
+  const clickToBackHandler = () => {
+    navigate("/students");
+  };
 
-    const createStudentData = async()=>{
-      console.log(studenImg)
-      const formData= new FormData();
-      formData.append('nat_id', studentData.nat_id);
-      formData.append('full_name',studentData.full_name);
-      formData.append('email',studentData.email);
-      formData.append('password',studentData.password);
-      formData.append('role',studentData.role);
-      formData.append('user_image', studenImg);
-      formData.append('dob',studentData.dob);
-      formData.append('gender',studentData.gender);
-  
-      const response= await axios.post("http://127.0.0.1:8000/api/create_user", formData, {
-        headers:{'Content-Type':"multipart/form-data"},
-      } );
-  
-      if(response)
-      {
-        console.log(response)
-        alert("Student Added successfully!");
-        setTimeout(()=>{
-            navigate('/students');
-        }, 1000);
-      }
-    }
-  
-    const handleSubmit= async(e)=>{
-      e.preventDefault();
-      await createStudentData();
-    }
+  const [studentData, setStudentData] = useState({
+    nat_id: "",
+    full_name: "",
+    email: "",
+    password: "",
+    role: "",
+    // user_image: null,
+    dob: "",
+    gender: "",
+  });
+  const [studentImg, setStudentImg] = useState("");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setStudentData({
-          ...studentData,
-          [name]: value,
-        });
-    };
-    
-    const handleFileChange = (e) => {
-        setStudentData({
-          ...studentData,
-          user_image: e.target.files[0],
-        });
-    };
+  const createStudentData = async()=>{
+    console.log(studentImg)
+    const formData= new FormData();
+    formData.append('nat_id', studentData.nat_id);
+    formData.append('full_name',studentData.full_name);
+    formData.append('email',studentData.email);
+    formData.append('password',studentData.password);
+    formData.append('role',studentData.role);
+    formData.append('user_image', studentImg);
+    formData.append('dob',studentData.dob);
+    formData.append('gender',studentData.gender);
+
+    const response= await axios.post("http://127.0.0.1:8000/api/create_user", formData, {
+      headers:{'Content-Type':"multipart/form-data"},
+    } );
+
+    if(response)
+    {
+      console.log(response)
+      alert("Student Added successfully!");
+      setTimeout(()=>{
+          navigate('/students');
+      }, 1000);
+    }
+  }
+  
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    await createStudentData();
+  }
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setStudentData({
+        ...studentData,
+        [name]: value,
+      });
+  };
+  
+  const handleFileChange = (e) => {
+    setStudentImg({
+        ...studentImg,
+        user_image: e.target.files[0],
+      });
+  };
 
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
@@ -98,7 +97,7 @@ export default function CreateStudent() {
     // };
 
     return(
-        <div className="wrapper">
+      <div className="wrapper">
         <Sidebar />
         <div className="main">
           <Header />
@@ -167,7 +166,6 @@ export default function CreateStudent() {
               </div>
             </div>
           </main>
-  
           <Footer />
         </div>
       </div>

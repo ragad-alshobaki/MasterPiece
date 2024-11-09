@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('description');
             $table->date('event_date');
             $table->time('event_time');
+            // $table->time('event_time_start');
+            // $table->time('event_time_end');
+            // $table->time('event_status');
             $table->string('event_image')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -68,10 +68,11 @@ export default function Sidebar() {
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="pages-blank.html">
+            <NavLink to={`/events`} className="sidebar-link">
               <i className="align-middle fa-light fa-calendar-star"></i>
               <span className="align-middle">Events</span>
-            </a>
+              {/* </a> */}
+             </NavLink>
           </li>
 
           <li className="sidebar-item">

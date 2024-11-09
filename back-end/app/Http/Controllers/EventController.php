@@ -47,7 +47,8 @@ class EventController extends Controller
                 'description' => $request->description,
                 'event_date' => $request->event_date,
                 'event_time' => $request->event_time,
-                'event_image' => $imageName,
+                // 'event_image' => $imageName,
+                'event_image' => $imageName ?? null,
             ]);
 
             return response()->json([
@@ -55,7 +56,8 @@ class EventController extends Controller
             ],200);
             } catch (\Exception $e) {
                 return response()->json([
-                    'message' => "Something went really wrong!"
+                    'message' => "Something went really wrong!",
+                    'error' => $e->getMessage()
                 ],500);
             }
     }
@@ -98,15 +100,27 @@ class EventController extends Controller
               $event->description = $request->description;
               $event->event_date = $request->event_date;
               $event->event_time = $request->event_time;
-              if($request->event_image) {
-                  $storage = Storage::disk('public');
-                  if($storage->exists('events_images/' . $event->event_image))
-                      $storage->delete('events_images/' . $event->event_image);
 
-                  $imageName = Str::random(10). "." .$request->event_image->getClientOriginalExtension();
-                  $event->event_image = $imageName;
-                  $storage->put('events_images/'.$imageName, file_get_contents($request->event_image));
-              }
+        if ($request->hasFile('event_image')) {
+            $storage = Storage::disk('public');
+
+            if ($storage->exists('events_images/' . $event->event_image)) {
+                $storage->delete('events_images/' . $event->event_image);
+            }
+
+            $imageName = Str::random(10) . "." . $request->event_image->getClientOriginalExtension();
+            $event->event_image = $imageName;
+            $storage->put('events_images/' . $imageName, file_get_contents($request->event_image));
+        }
+            //   if($request->event_image) {
+            //       $storage = Storage::disk('public');
+            //       if($storage->exists('events_images/' . $event->event_image))
+            //           $storage->delete('events_images/' . $event->event_image);
+
+            //       $imageName = Str::random(10). "." .$request->event_image->getClientOriginalExtension();
+            //       $event->event_image = $imageName;
+            //       $storage->put('events_images/'.$imageName, file_get_contents($request->event_image));
+            //   }
         
               $event->save();
         
@@ -115,7 +129,8 @@ class EventController extends Controller
               ],200);
           } catch (\Exception $e) {
               return response()->json([
-                  'message' => "Something went really wrong!"
+                  'message' => "Something went really wrong!",
+                  'error' => $e->getMessage()
               ],500);
           }
     }
@@ -128,13 +143,13 @@ class EventController extends Controller
         $event = Event::find($id);
         if (!$event) {
             return response()->json([
-                'message' => 'This User Not Found.'
+                'message' => 'This Event Not Found.'
             ], 404);
         }
 
         $storage = Storage::disk('public');
-        if($storage->exists('events_images/'.$event->user_image))
-           $storage->delete('events_images/'.$event->user_image);
+        if($storage->exists('events_images/'.$event->event_image))
+           $storage->delete('events_images/'.$event->event_image);
 
         $event->delete();
 
