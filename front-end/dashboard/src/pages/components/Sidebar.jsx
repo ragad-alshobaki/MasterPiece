@@ -71,16 +71,14 @@ export default function Sidebar() {
             <NavLink to={`/events`} className="sidebar-link">
               <i className="align-middle fa-light fa-calendar-star"></i>
               <span className="align-middle">Events</span>
-              {/* </a> */}
              </NavLink>
           </li>
 
           <li className="sidebar-item">
-            <a className="sidebar-link" href="pages-blank.html">
-              {/* <i className="align-middle fa-duotone fa-solid fa-grid-horizontal"></i> */}
+          <NavLink to={`/activities`} className="sidebar-link">
               <i className="align-middle fa-light fa-square-star"></i>
               <span className="align-middle">Activities</span>
-            </a>
+             </NavLink>
           </li>
         </ul>
       </div>

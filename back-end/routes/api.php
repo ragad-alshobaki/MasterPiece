@@ -37,4 +37,4 @@ Route::get('activities', [ActivityController::class, 'index']);
 Route::get('activity/{id}', [ActivityController::class, 'show']); 
 Route::post('create_activity', [ActivityController::class, 'store']); 
 Route::put('activity_update/{id}', [ActivityController::class, 'update']);
-Route::delete('event_activity/{id}', [ActivityController::class, 'destroy']);
+Route::delete('activity_delete/{id}', [ActivityController::class, 'destroy']);
