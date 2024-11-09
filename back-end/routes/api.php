@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -31,3 +32,9 @@ Route::get('event/{id}', [EventController::class, 'show']);
 Route::post('create_event', [EventController::class, 'store']); 
 Route::put('event_update/{id}', [EventController::class, 'update']);
 Route::delete('event_delete/{id}', [EventController::class, 'destroy']);
+
+Route::get('activities', [ActivityController::class, 'index']);
+Route::get('activity/{id}', [ActivityController::class, 'show']); 
+Route::post('create_activity', [ActivityController::class, 'store']); 
+Route::put('activity_update/{id}', [ActivityController::class, 'update']);
+Route::delete('event_activity/{id}', [ActivityController::class, 'destroy']);
